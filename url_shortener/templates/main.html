@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+	<form>
+		<fieldset class="form-group">
+			<div class="form-group">
+				<input id="url_input" type="text" name="url" class="form-control form-control-lg" placeholder="Вставьте ссылку сюда">
+				<button id="shorten_btn" class="btn btn-lg btn-outline-success">Сократить!</button>
+			</div>
+		</fieldset>
+		<div class="form-group">
+			<div class="alert-danger" style="display: hidden"></div>
+		</div>
+	</form>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>
+{% endblock content %}
