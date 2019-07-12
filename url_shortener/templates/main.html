@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-	<form>
+	<form action="" onsubmit="event.preventDefault();">
 		<fieldset class="form-group">
 			<div class="form-group">
 				<input id="url_input" type="text" name="url" class="form-control form-control-lg" placeholder="Вставьте ссылку сюда">
@@ -8,7 +8,10 @@
 			</div>
 		</fieldset>
 		<div class="form-group">
-			<div class="alert-danger" style="display: hidden"></div>
+			<div id="report" class="alert-danger" style="display: none"></div>
+			<div id="url_container" style="display: none">
+				<div id="url_shortened" class="form-control form-control-md"></div><button id="copy_btn" class="btn btn-md">Копировать</button>
+			</div>
 		</div>
 	</form>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>
