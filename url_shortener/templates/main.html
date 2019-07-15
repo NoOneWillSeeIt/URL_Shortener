@@ -1,16 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
+	<img src="{{ url_for('static', filename='nyancat.gif') }}" class="img-fluid mx-auto mb-1 d-block">
 	<form action="" onsubmit="event.preventDefault();">
+		<div class="form-group">
+			<div id="report" class="alert-warning form-control-lg invisible"></div>
+		</div>
 		<fieldset class="form-group">
 			<div class="form-group">
-				<input id="url_input" type="text" name="url" class="form-control form-control-lg" placeholder="Вставьте ссылку сюда">
-				<button id="shorten_btn" class="btn btn-lg btn-outline-success">Сократить!</button>
+				<input id="url_input" type="text" name="url" class="form-control form-control-lg" placeholder="Paste link here">
+				<input id="form_range" type="range" name="duration" min="0" max="4" step="1" class="custom-range w-100 mb-2 mt-2"><br>
+				<h5 class="text-center"><label id="label_form_range" for="form_range" class="font-weight-normal"> </label></h5>
+				<button id="shorten_btn" class="btn btn-lg btn-outline-success w-100">Make it short!</button>
 			</div>
 		</fieldset>
 		<div class="form-group">
-			<div id="report" class="alert-danger" style="display: none"></div>
-			<div id="url_container" style="display: none">
-				<div id="url_shortened" class="form-control form-control-md"></div><button id="copy_btn" class="btn btn-md">Копировать</button>
+			<div id="url_container" class="invisible">
+				<div id="url_shortened" class="form-control form-control-lg"></div>
+				<button id="copy_btn" class="btn btn-lg btn-success w-100">Copy</button>
 			</div>
 		</div>
 	</form>
