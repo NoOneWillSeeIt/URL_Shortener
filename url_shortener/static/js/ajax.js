@@ -34,7 +34,7 @@ shorten_btn.onclick = function() {
 	old_range_value = range.value;
 	
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'process', true);
+	xhr.open('POST', 'shrink', true);
 
 	let body = new FormData();
 	body.append('url', url_link);
@@ -45,15 +45,14 @@ shorten_btn.onclick = function() {
 		if (xhr.status == 200 && xhr.readyState == 4) {
 			let json_response = JSON.parse(xhr.responseText);
 			let url_shortened = document.getElementById('url_shortened');
-			let link = window.location.protocol + '//' + window.location.host + '/' + json_response.shortened;
-			url_shortened.innerHTML = link;
+			url_shortened.innerHTML = json_response.shortened;
 			document.getElementById('url_container').classList.remove('invisible');
 		}
 		else {
 			let report_div = document.getElementById('report');
 			let json_response = '';
 			if (xhr.responseText) {
-				let json_response = JSON.parse(xhr.responseText)['error'];
+				json_response = JSON.parse(xhr.responseText)['error'];
 			}
 			report_div.innerHTML = 'error: ' + json_response;
 			report_div.classList.remove('invisible');

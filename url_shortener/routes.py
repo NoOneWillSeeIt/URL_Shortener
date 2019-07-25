@@ -1,61 +1,64 @@
-from secrets import token_urlsafe
 from datetime import datetime, timedelta
-from urllib.parse import urlparse
 from flask import url_for, render_template, redirect, request, jsonify, flash
+from secrets import token_urlsafe
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from url_shortener import app, db
 from url_shortener.models import URL
+from url_shortener.utils import log_error, url_validate
 
 @app.route('/')
 def home():
     return render_template('main.html')
 
-def url_validate(url):
-    try:
-        parsed_url = urlparse(url)
-        return all([parsed_url.scheme, parsed_url.netloc])
-    except:
-        return False
-
-@app.route('/process', methods=['POST'])
-def process():
-    url = ''
-    hours = 0
+@app.route('/shrink', methods=['POST'])
+def shrink():
     try:
         url = request.form['url']
         if not url_validate(url):
             return jsonify({'error': 'incorrect url'})
-        hours = request.form['hours']
+        hours = int(request.form['hours'])
     except:
-        return jsonify({'error': 'incorrect request'}), 500
+        return jsonify({'error': 'incorrect request'}), 400
 
-    storage_time = timedelta(hours=int(hours))
-    estimated_date = datetime.utcnow() + storage_time
+    if hours > app.config['MAX_STORAGE_TIME']:
+        hours = app.config['MAX_STORAGE_TIME']
+
+    estimated_date = datetime.utcnow() + timedelta(hours=hours)
     
-    shortened = ''
-    tries = 0
-    while(True):
+    for rounds in range(0,5):
+        shortened = token_urlsafe(4)
+        url_obj = URL(url=url, shortened=shortened, estimated_date=estimated_date)
         try:
-            shortened = token_urlsafe(4)
-            url_obj = URL(url=url, shortened=shortened, estimated_date=estimated_date)
             db.session.add(url_obj)
             db.session.commit()
             break
-        except:
-            tries += 1
-            if tries > 4:
-                return jsonify({'error': 'internal server error'}), 500
+        except IntegrityError as err:
+            db.session.rollback()
+        except SQLAlchemyError as err:
+            db.session.rollback()
+            log_error(err)
+    else:
+        return jsonify({'error': 'internal server error'}), 500
 
-    return jsonify({'shortened': shortened, 'estimated_date': estimated_date.strftime('%d.%m.%Y %H:%M:%S')})
+    return jsonify({'shortened': \
+                    url_for('return_redirect', shortened=shortened, _external=True),
+                    'estimated_date': \
+                    estimated_date.strftime('%d.%m.%Y %H:%M:%S')})
 
 
-@app.route('/<string:shortened>')
+@app.route('/l/<string:shortened>/')
 def return_redirect(shortened):
     url = URL.query.filter_by(shortened=shortened).first()
     if url:
         if datetime.utcnow() < url.estimated_date:
             return redirect(url.url, code=302)
         else:
-            db.session.delete(url)
-            db.session.commit()
+            try:
+                db.session.delete(url)
+                db.session.commit()
+            except SQLAlchemyError as err:
+                db.session.rollback()
+                log_error(err)
+                
     flash('This link is invalid or expired!', 'danger')
     return redirect(url_for('home'))
