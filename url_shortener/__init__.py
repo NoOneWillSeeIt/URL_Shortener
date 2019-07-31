@@ -1,11 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from url_shortener.config import config
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'e2a87a53bf8ea2b8cfd7fd1f80c70896'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///static/site.db'
-app.config['MAX_STORAGE_TIME'] = 1440
+# app = Flask(__name__)
+# config_name = 'dev_config'
+# app.config.from_object(config[config_name])
+# config[config_name].init_app(app)
+# db = SQLAlchemy(app)
 
-db = SQLAlchemy(app)
+# from url_shortener import routes
 
-from url_shortener import routes
+db = SQLAlchemy()
+
+def create_app(config_name='dev_config'):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+
+    db.init_app(app)
+
+    from url_shortener.routes import routes
+    app.register_blueprint(routes)
+
+    return app
