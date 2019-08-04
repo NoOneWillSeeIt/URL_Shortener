@@ -5,7 +5,7 @@ from secrets import token_urlsafe
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from url_shortener import db
 from url_shortener.models import URL
-from url_shortener.utils import log_error, url_validate
+from url_shortener.utils import url_validate
 
 routes = Blueprint('routes', __name__)
 
@@ -41,7 +41,6 @@ def shrink():
             db.session.rollback()
         except SQLAlchemyError as err:
             db.session.rollback()
-            log_error(err)
     else:
         return jsonify({'error': 'internal server error'}), 500
 
@@ -63,7 +62,6 @@ def return_redirect(shortened):
                 db.session.commit()
             except SQLAlchemyError as err:
                 db.session.rollback()
-                log_error(err)
                 
     flash('This link is invalid or expired!', 'danger')
     return redirect(url_for('routes.home'))

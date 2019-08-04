@@ -51,8 +51,12 @@ shorten_btn.onclick = function() {
 		else {
 			let report_div = document.getElementById('report');
 			let json_response = '';
-			if (xhr.responseText) {
+			if (xhr.responseText && (xhr.responseType == 'json')) {
 				json_response = JSON.parse(xhr.responseText)['error'];
+			}
+			else {
+				if (xhr.status == 500)
+					json_response = 'internal server error'
 			}
 			report_div.innerHTML = 'error: ' + json_response;
 			report_div.classList.remove('invisible');

@@ -3,12 +3,15 @@
 
 import os
 from flask_script import Manager, Shell
+from flask_migrate import Migrate, MigrateCommand
 from url_shortener import create_app, db
 from url_shortener.models import URL
 
-app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+app = create_app(os.environ.get('FLASK_CONFIG') or 'default')
 
 manager = Manager(app)
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 def make_shell_context():
     return dict(app=app, db=db, URL=URL)
@@ -23,6 +26,8 @@ def test():
 
 @manager.command
 def deploy():
+    from flask_migrate import upgrade
+    upgrade()
     db.create_all()
 
 if __name__ == '__main__':

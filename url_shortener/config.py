@@ -11,6 +11,7 @@ class Config:
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @classmethod
     def init_app(cls, app):
@@ -24,7 +25,6 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Testing config for unit tests"""
     SQLALCHEMY_DATABASE_URI = 'sqlite:///static/site-test.db'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = True
 
 class ProductionConfig(Config):

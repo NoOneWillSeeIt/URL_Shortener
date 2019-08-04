@@ -2,14 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from url_shortener.config import config
 
-# app = Flask(__name__)
-# config_name = 'dev_config'
-# app.config.from_object(config[config_name])
-# config[config_name].init_app(app)
-# db = SQLAlchemy(app)
-
-# from url_shortener import routes
-
 db = SQLAlchemy()
 
 def create_app(config_name='dev_config'):

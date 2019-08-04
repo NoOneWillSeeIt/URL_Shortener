@@ -2,7 +2,7 @@ from url_shortener import db
 
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(200), nullable=False)
+    url = db.Column(db.String(2048), nullable=False)
     shortened = db.Column(db.String(6), unique=True, nullable=False)
     estimated_date = db.Column(db.DateTime(), nullable=False)
 
