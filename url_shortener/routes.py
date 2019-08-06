@@ -20,6 +20,8 @@ def shrink():
         url = request.form['url']
         if not url_validate(url):
             return jsonify({'error': 'incorrect url'}), 400
+        if len(url) > 2048:
+            return jsonify({'error': 'url is too big'}), 400
         hours = int(request.form['hours'])
     except:
         return jsonify({'error': 'incorrect request'}), 400

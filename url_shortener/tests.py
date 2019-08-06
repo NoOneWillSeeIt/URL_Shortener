@@ -32,6 +32,13 @@ class TestCase(unittest.TestCase):
         self.assertTrue(response_body['error'] == 'incorrect url')
 
         response = self.client.post(url_for('routes.shrink'), data={
+            'url': 'https://www.google.com/' + ('a' * 2500)
+            })
+        response_body = json.loads(response.get_data(as_text=True))
+        self.assertTrue(response.status_code == 400)
+        self.assertTrue(response_body['error'] == 'url is too big')
+
+        response = self.client.post(url_for('routes.shrink'), data={
             'url': 'https://www.google.com/'
             })
         response_body = json.loads(response.get_data(as_text=True))
