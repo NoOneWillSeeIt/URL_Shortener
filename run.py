@@ -36,19 +36,23 @@ def deploy():
     upgrade()
     db.create_all()
 
-
-redis_url = app.config['REDISTOGO_URL']
-conn = redis.from_url(redis_url)
-scheduler = Scheduler(connection=conn)
-scheduler.schedule(
-    scheduled_time=datetime.utcnow(),
-    func=delete_overdue_urls,
-    args=None,
-    kwargs=None,
-    interval=timedelta(hours=48).total_seconds(),
-    repeat=None,
-    meta=None
-)
+try:
+    redis_url = app.config['REDISTOGO_URL']
+    conn = redis.from_url(redis_url)
+    conn.ping()
+except redis.ConnectionError as err:
+    pass
+else:
+    scheduler = Scheduler(connection=conn)
+    scheduler.schedule(
+        scheduled_time=datetime.utcnow(),
+        func=delete_overdue_urls,
+        args=None,
+        kwargs=None,
+        interval=timedelta(hours=48).total_seconds(),
+        repeat=None,
+        meta=None
+    )
 
 if __name__ == '__main__':
     manager.run()
