@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import os
+import redis
+from datetime import datetime, timedelta
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
+from rq_scheduler import Scheduler
 from url_shortener import create_app, db
 from url_shortener.models import URL
+from url_shortener.utils import delete_overdue_urls
 
 app = create_app(os.environ.get('FLASK_CONFIG') or 'default')
 
@@ -15,6 +19,7 @@ manager.add_command('db', MigrateCommand)
 
 def make_shell_context():
     return dict(app=app, db=db, URL=URL)
+
 manager.add_command('shell', Shell(make_context=make_shell_context))
 
 @manager.command
@@ -24,11 +29,26 @@ def test():
     tests = unittest.TestLoader().discover('url_shortener.tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
 
+
 @manager.command
 def deploy():
     from flask_migrate import upgrade
     upgrade()
     db.create_all()
+
+
+redis_url = app.config['REDISTOGO_URL']
+conn = redis.from_url(redis_url)
+scheduler = Scheduler(connection=conn)
+scheduler.schedule(
+    scheduled_time=datetime.utcnow(),
+    func=delete_overdue_urls,
+    args=None,
+    kwargs=None,
+    interval=timedelta(hours=48).total_seconds(),
+    repeat=None,
+    meta=None
+)
 
 if __name__ == '__main__':
     manager.run()

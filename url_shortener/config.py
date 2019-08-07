@@ -19,6 +19,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     """Development config, only for dev purposes."""
+    REDISTOGO_URL = 'redis://localhost:6379'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///static/site.db'
     DEBUG = True
 
@@ -29,7 +30,6 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     """App configuration for production."""
-
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     @classmethod
@@ -55,6 +55,9 @@ class ProductionConfig(Config):
         app.logger.addHandler(mail_handler)
 
 class HerokuConfig(ProductionConfig):
+    """App configuration for deploying on Heroku Platform"""
+    REDISTOGO_URL = os.environ.get('REDISTOGO_URL') or 'redis://localhost:6379'
+
     @classmethod
     def init_app(cls, app):
         ProductionConfig.init_app(app)
