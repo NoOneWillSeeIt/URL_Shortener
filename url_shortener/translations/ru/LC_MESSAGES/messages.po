@@ -1,0 +1,97 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-08-08 20:29+0700\n"
+"PO-Revision-Date: 2019-08-08 17:45+0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: url_shortener/routes.py:23
+msgid "incorrect url"
+msgstr "неверная ссылка"
+
+#: url_shortener/routes.py:25
+msgid "url is too big"
+msgstr "ссылка слишком большая"
+
+#: url_shortener/routes.py:28
+msgid "incorrect request"
+msgstr "неверный запрос"
+
+#: url_shortener/routes.py:48
+msgid "internal server error"
+msgstr "внутренняя ошибка сервера"
+
+#: url_shortener/routes.py:69
+msgid "This link is invalid or expired!"
+msgstr "Ссылка неверна или недействительна!"
+
+#: url_shortener/templates/404.html:4
+msgid "Error 404."
+msgstr "Ошибка 404."
+
+#: url_shortener/templates/404.html:5
+msgid "How did you even get here? Let's shorten some URLs on the"
+msgstr "Как вы вообще сюда попали? Давайте сократим пару ссылок на"
+
+#: url_shortener/templates/404.html:5
+msgid "main page"
+msgstr "главной странице"
+
+#: url_shortener/templates/main.html:10
+msgid "Paste link here"
+msgstr "Вставьте сюда ссылку"
+
+#: url_shortener/templates/main.html:13
+msgid "Make it short!"
+msgstr "Сократить!"
+
+#: url_shortener/templates/main.html:19
+msgid "Copy"
+msgstr "Копировать"
+
+#: url_shortener/templates/main.html:24
+msgid "24 Hours"
+msgstr "24 Часа"
+
+#: url_shortener/templates/main.html:25
+msgid "1 Week"
+msgstr "1 Неделя"
+
+#: url_shortener/templates/main.html:26
+msgid "2 Weeks"
+msgstr "2 Недели"
+
+#: url_shortener/templates/main.html:27
+msgid "1 Month"
+msgstr "1 Месяц"
+
+#: url_shortener/templates/main.html:28
+msgid "2 Months"
+msgstr "2 Месяца"
+
+#: url_shortener/templates/main.html:29
+msgid "error: "
+msgstr "ошибка: "
+
+#: url_shortener/templates/main.html:30
+msgid "Paste any link before shorten :)"
+msgstr "Вставьте какую-нибудь ссылку :)"
+
+#: url_shortener/templates/main.html:31
+msgid "Paste new link before shorten :)"
+msgstr "Вставьте новую ссылку :)"
+

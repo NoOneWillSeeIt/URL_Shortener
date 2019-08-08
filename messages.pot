@@ -1,0 +1,95 @@
+# Translations template for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-08-08 20:29+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: url_shortener/routes.py:23
+msgid "incorrect url"
+msgstr ""
+
+#: url_shortener/routes.py:25
+msgid "url is too big"
+msgstr ""
+
+#: url_shortener/routes.py:28
+msgid "incorrect request"
+msgstr ""
+
+#: url_shortener/routes.py:48
+msgid "internal server error"
+msgstr ""
+
+#: url_shortener/routes.py:69
+msgid "This link is invalid or expired!"
+msgstr ""
+
+#: url_shortener/templates/404.html:4
+msgid "Error 404."
+msgstr ""
+
+#: url_shortener/templates/404.html:5
+msgid "How did you even get here? Let's shorten some URLs on the"
+msgstr ""
+
+#: url_shortener/templates/404.html:5
+msgid "main page"
+msgstr ""
+
+#: url_shortener/templates/main.html:10
+msgid "Paste link here"
+msgstr ""
+
+#: url_shortener/templates/main.html:13
+msgid "Make it short!"
+msgstr ""
+
+#: url_shortener/templates/main.html:19
+msgid "Copy"
+msgstr ""
+
+#: url_shortener/templates/main.html:24
+msgid "24 Hours"
+msgstr ""
+
+#: url_shortener/templates/main.html:25
+msgid "1 Week"
+msgstr ""
+
+#: url_shortener/templates/main.html:26
+msgid "2 Weeks"
+msgstr ""
+
+#: url_shortener/templates/main.html:27
+msgid "1 Month"
+msgstr ""
+
+#: url_shortener/templates/main.html:28
+msgid "2 Months"
+msgstr ""
+
+#: url_shortener/templates/main.html:29
+msgid "error: "
+msgstr ""
+
+#: url_shortener/templates/main.html:30
+msgid "Paste any link before shorten :)"
+msgstr ""
+
+#: url_shortener/templates/main.html:31
+msgid "Paste new link before shorten :)"
+msgstr ""
+

@@ -4,10 +4,11 @@
 import os
 import redis
 from datetime import datetime, timedelta
+from flask import request
 from flask_script import Manager, Shell
 from flask_migrate import Migrate, MigrateCommand
 from rq_scheduler import Scheduler
-from url_shortener import create_app, db
+from url_shortener import babel, create_app, db
 from url_shortener.models import URL
 from url_shortener.utils import delete_overdue_urls
 
@@ -36,6 +37,7 @@ def deploy():
     upgrade()
     db.create_all()
 
+
 try:
     redis_url = app.config['REDISTOGO_URL']
     conn = redis.from_url(redis_url)
@@ -53,6 +55,12 @@ else:
         repeat=None,
         meta=None
     )
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 if __name__ == '__main__':
     manager.run()

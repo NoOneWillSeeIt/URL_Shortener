@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, current_app
 from flask import flash, jsonify, redirect, render_template, request, url_for
+from flask_babel import _
 from secrets import token_urlsafe
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from url_shortener import db
@@ -19,12 +20,12 @@ def shrink():
     try:
         url = request.form['url']
         if not url_validate(url):
-            return jsonify({'error': 'incorrect url'}), 400
+            return jsonify({'error': _('incorrect url')}), 400
         if len(url) > 2048:
-            return jsonify({'error': 'url is too big'}), 400
+            return jsonify({'error': _('url is too big')}), 400
         hours = int(request.form['hours'])
     except:
-        return jsonify({'error': 'incorrect request'}), 400
+        return jsonify({'error': _('incorrect request')}), 400
 
     max_storage_time = current_app.config['MAX_STORAGE_TIME']
     if hours > max_storage_time:
@@ -44,7 +45,7 @@ def shrink():
         except SQLAlchemyError as err:
             db.session.rollback()
     else:
-        return jsonify({'error': 'internal server error'}), 500
+        return jsonify({'error': _('internal server error')}), 500
 
     return jsonify({'shortened': \
                     url_for('routes.return_redirect', shortened=shortened, _external=True),
@@ -65,7 +66,7 @@ def return_redirect(shortened):
             except SQLAlchemyError as err:
                 db.session.rollback()
                 
-    flash('This link is invalid or expired!', 'danger')
+    flash(_('This link is invalid or expired!'), 'danger')
     return redirect(url_for('routes.home'))
 
 

@@ -12,6 +12,7 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    LANGUAGES = ['en', 'ru']
 
     @classmethod
     def init_app(cls, app):

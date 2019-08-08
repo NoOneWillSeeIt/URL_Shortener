@@ -6,25 +6,25 @@ let old_url_input_value = '';
 let old_range_value = 0;
 
 let duration = [
-	{label: '24 Hours', hours: 24},
-	{label: '1 Week', hours: 168},
-	{label: '2 Weeks', hours: 336},
-	{label: '1 Month', hours: 720},
-	{label: '2 Months', hours: 1440}
+	{label: l10n.hours_24, hours: 24},
+	{label: l10n.week_1, hours: 168},
+	{label: l10n.week_2, hours: 336},
+	{label: l10n.month_1, hours: 720},
+	{label: l10n.month_2, hours: 1440}
 ]
 
 shorten_btn.onclick = function() {
 	url_link = document.getElementById('url_input').value;
 	if (!url_link) {
 		let report_div = document.getElementById('report');
-		report_div.innerHTML = 'Paste any link before shorten :)';
+		report_div.innerHTML = l10n.warning_paste_link;
 		report_div.classList.remove('invisible');
 		return;
 	}
 
 	if (old_url_input_value == url_link && range.value == old_range_value) {
 		let report_div = document.getElementById('report');
-		report_div.innerHTML = 'Paste new link before shorten :)';
+		report_div.innerHTML = l10n.warning_paste_new_link;
 		report_div.classList.remove('invisible');
 		return;
 	}
@@ -58,7 +58,7 @@ shorten_btn.onclick = function() {
 				if (xhr.status == 500)
 					json_response = 'internal server error'
 			}
-			report_div.innerHTML = 'error: ' + json_response;
+			report_div.innerHTML = l10n.error_text + json_response;
 			report_div.classList.remove('invisible');
 		}
 	};

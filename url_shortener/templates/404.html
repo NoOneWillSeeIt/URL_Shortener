@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 	<img src="{{ url_for('static', filename='grumpy_nyancat.gif') }}" class="img-fluid mx-auto mb-1 d-block" width="400px" height="400px">
-	<h3 class="text-center text-danger">Error 404.</h3>
-	<h5 class="text-center font-weight-normal"> How did you even get here? Let's shorten some URLs on the <a href="{{ url_for('routes.home') }}">main page</a>!</h5>
+	<h3 class="text-center text-danger">{{ _('Error 404.') }}</h3>
+	<h5 class="text-center font-weight-normal">{{ _('How did you even get here? Let\'s shorten some URLs on the') }}<a href="{{ url_for('routes.home') }}">{{ _('main page') }}</a>!</h5>
 {% endblock content %}
